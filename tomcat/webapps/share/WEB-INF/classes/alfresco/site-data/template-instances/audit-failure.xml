@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<template-instance>
+<template-type>org/alfresco/audit-failure</template-type>
+    <components>
+	
+      <component>
+         <region-id>title</region-id>
+         <url>/components/title/audit-title</url>
+      </component>
+      
+	<!-- Toolbar -->
+      <component>
+         <region-id>toolbar</region-id>
+         <url>/components/audit/audit-toolbar</url>
+      </component>
+	<!-- audit failure -->
+    <component>
+	<region-id>audit-failure</region-id>
+	<url>/components/audit/audit-failure</url>
+    </component>
+
+    </components>
+</template-instance> 
+

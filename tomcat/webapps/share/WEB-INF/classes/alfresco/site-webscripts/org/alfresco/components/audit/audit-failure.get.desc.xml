@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>audit login failure</shortname>
+  <description>audit login failure</description>
+  <url>/components/audit/audit-failure</url>
+</webscript>

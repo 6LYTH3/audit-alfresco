@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>audit login</shortname>
+  <description>audit login</description>
+  <url>/components/audit/audit-login</url>
+</webscript>

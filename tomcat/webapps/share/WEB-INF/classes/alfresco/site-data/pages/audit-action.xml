@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+ <title>Audit Action</title>
+ <description>Demo Home Description</description>
+ <template-instance>audit-action</template-instance>
+ <authentication>admin</authentication>
+</page>

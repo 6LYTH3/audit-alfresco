@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Audit Login POST</shortname>
+  <description>Audit Login POST form submission processing</description>
+  <url>/components/audit/audit-login</url>
+</webscript>
