@@ -11,6 +11,11 @@ PATHCM='/opt/alfresco*/tomcat/webapps/share/components/audit/'
 cp tomcat/webapps/share/components/audit/* ${PATHCM}
 echo "Components and javascrip  [success]"
 
+#capy all image into images of alfresco
+PATHIMG='/opt/alfresco*/tomcat/webapps/share/components/images/'
+cp tomcat/webapps/share/components/audit/images/* ${PATHIMG}
+echo "Images [success]"
+
 #copy all page
 PATHPAGE='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-data/pages/'
 cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-data/pages/* ${PATHPAGE}
