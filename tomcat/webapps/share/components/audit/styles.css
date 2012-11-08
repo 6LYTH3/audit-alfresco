@@ -1,0 +1,134 @@
+.buttons {
+   padding-left: 20em;
+}
+.FButtons {
+   float: right;
+}
+.linkB
+{
+   text-align: center;
+}
+.label 
+{
+   display: block;
+   float: left;
+   padding-right: 0.8em;
+   padding-top: 0.2em;
+   width: 5em;
+   text-align: right;
+   font-weight: bold;
+}
+.row
+{
+   padding: 0.2em;
+}
+.Hfilter
+{
+   padding-left: 1em;
+   padding-bottom: 0.3em;
+   padding-top: 0.2em;
+}
+.header-bar
+{
+   height: 1.1em;
+   padding: 0.3em;
+   margin: 1.5em 1em 0em 0.5em;
+   background-color: #e3eaec;
+   border-bottom: 2px solid #f0f3f4;
+   font-weight: bold;
+   font-size: 116%;
+}
+
+/* TABLES */
+
+table {
+  border-top: 1px solid #DFDFDF;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+tr {
+  border: 1px solid #DFDFDF;
+}
+
+tr>td:first-child, tr>th:first-child {
+  padding-left: 1.25em;
+}
+
+tr>td:last-child, tr>th:last-child {
+  padding-right: 1.25em;
+}
+
+td { 
+  border: 1px solid #DFDFDF; 
+}
+
+td, th {
+  line-height: 1.5em;
+  padding: 0.5em 0.6em;
+  text-align: left;
+  vertical-align: top;
+}
+
+thead {
+   background-color: #efefef;
+  background-image: -moz-linear-gradient(top, #ffffff, #eaeaea);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff), color-stop(1, #eaeaea));
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#ffffff', EndColorStr = '#eaeaea');
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#eaeaea')";
+  color: #666666;
+  font-weight: bold;
+  line-height: 1.7em;
+  padding: 0.2em 0.6em;
+}
+
+th a {
+  display: block;
+  text-decoration: none;
+}
+
+th a:link, th a:visited {
+  color: #666666;
+}
+
+th a:hover, th a:focus {
+  color: #333333;
+}
+
+th:hover, tr:hover {
+  background: #E1F2B6;
+}
+
+/* PAGINATION */
+
+#testTable { 
+  width : 350px;
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+#tablePagination { 
+  background-color: #DCDCDC; 
+  font-size: 0.8em; 
+  padding: 0px 5px; 
+  height: 20px
+}
+
+#tablePagination_paginater { 
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+#tablePagination img { 
+  padding: 0px 2px; 
+}
+
+#tablePagination_perPage { 
+  float: left; 
+}
+
+#tablePagination_paginater { 
+  float: right; 
+}
+

@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Audit Action POST</shortname>
+  <description>Audit Action POST form submission processing</description>
+  <url>/components/audit/audit-action</url>
+</webscript>

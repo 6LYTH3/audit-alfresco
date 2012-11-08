@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Audit xmlns="http://www.alfresco.org/repo/audit/model/3.2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.alfresco.org/repo/audit/model/3.2 alfresco-audit-3.2.xsd">
+
+<DataExtractors>
+	<DataExtractor name="simpleValue" registeredName="auditModel.extractor.simpleValue"/>
+       <DataExtractor name="nodeNameValue" registeredName="auditModel.extractor.nodeName"/>
+</DataExtractors>
+
+<PathMappings>
+	<PathMap source="/alfresco-access" target="/my-app" />
+	<PathMap source="/alfresco-api/post/ContentService/getReader" target="/my-app"/>
+</PathMappings>
+
+<Application name="my-app" key="my-app">
+
+<RecordValue key="action" dataExtractor="simpleValue" dataSource="/my-app/transaction/action" dataTrigger="/my-app/transaction/action" />
+<RecordValue key="user" dataExtractor="simpleValue" dataSource="/my-app/transaction/user" dataTrigger="/my-app/transaction/user" />
+<RecordValue key="path" dataExtractor="simpleValue" dataSource="/my-app/transaction/path" dataTrigger="/my-app/transaction/path" />
+<RecordValue key="name" dataExtractor="nodeNameValue" dataSource="/my-app/args/nodeRef" dataTrigger="/my-app/no-error"/>
+</Application>
+
+</Audit>

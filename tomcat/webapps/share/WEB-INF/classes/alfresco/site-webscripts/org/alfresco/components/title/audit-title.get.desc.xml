@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>audit Title</shortname>
+  <description>Title audit page</description>
+  <url>/components/title/audit-title</url>
+</webscript>

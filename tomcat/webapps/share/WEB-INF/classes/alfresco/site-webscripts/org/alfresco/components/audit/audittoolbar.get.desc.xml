@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Audit Toolbar</shortname>
+  <description>Audit Toolbar</description>
+  <url>/components/audit/audit-toolbar</url>
+</webscript>

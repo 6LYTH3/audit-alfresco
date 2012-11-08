@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+   <page>
+     <title>Audit Login Failure page</title>
+     <description>Demo Home Description</description>
+     <template-instance>audit-failure</template-instance>
+     <authentication>admin</authentication>
+   </page>
