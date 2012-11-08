@@ -5,6 +5,12 @@
 #create audit folder
 mkdir /opt/alfresco*/tomcat/webapps/share/components/audit
 mkdir /opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit
+#mkdir /opt/alfresco*/tomcat/shared/classes/alfresco/extension/audit
+
+#copy all application and config
+PATHAPP='/opt/alfresco*/tomcat/shared/classes/alfresco/extension/'
+cp -rf tomcat/shared/classes/alfresco/extension/* ${PATHAPP}
+echo "Application and config  [success]"
 
 #copy all file into webapps/share/component
 PATHCM='/opt/alfresco*/tomcat/webapps/share/components/audit/'
