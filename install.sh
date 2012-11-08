@@ -1,10 +1,11 @@
 #!/bin/bash
 #for linux server
 #default environment alfresco
+# * is the your alfresco version
 
 #create audit folder
-mkdir /opt/alfresco*/tomcat/webapps/share/components/audit
-mkdir /opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit
+mkdir -p /opt/alfresco*/tomcat/webapps/share/components/audit
+mkdir -p /opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit
 #mkdir /opt/alfresco*/tomcat/shared/classes/alfresco/extension/audit
 
 #copy all application and config
@@ -33,8 +34,8 @@ cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-data/template-instances/* 
 echo "Template-instances [success]"
 
 #copy all web-scripts
-PATHWEB='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfrescon/components/audit/'
-cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfrescon/components/audit/* ${PATHWEB}
+PATHWEB='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit/'
+cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit/* ${PATHWEB}
 echo "Site-webscritps [success]"
 
 #copy all freemarker template
