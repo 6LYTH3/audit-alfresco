@@ -13,8 +13,8 @@ If you don't have a preferred installation method, then simply copy and paste:
 
 support alfresco-4.0.e version
 
-Configrulation
---------------
+Configuration
+-------------
 If you need use audit appliction in admin menu you must edit `share-config.xml`.
 follow me.
 
