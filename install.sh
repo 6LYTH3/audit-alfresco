@@ -13,7 +13,7 @@ PATHAPP='/opt/alfresco*/tomcat/shared/classes/alfresco/extension/'
 cp -rf tomcat/shared/classes/alfresco/extension/* ${PATHAPP}
 echo "Application and config  [success]"
 
-#copy all file into webapps/share/component
+#copy all file into webapps/share/components
 PATHCM='/opt/alfresco*/tomcat/webapps/share/components/audit/'
 cp tomcat/webapps/share/components/audit/* ${PATHCM}
 echo "Components and javascrip  [success]"
@@ -28,6 +28,10 @@ PATHPAGE='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-data
 cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-data/pages/* ${PATHPAGE}
 echo "Page [success]"
 
+#copy title
+PATHTI='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/title/'
+cp tomcat/webscripts/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/title/* ${PATHTI}
+
 #copy all template-instances
 PATHTMEPLATE='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-data/template-instances/'
 cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-data/template-instances/* ${PATHTMEPLATE}
@@ -36,7 +40,7 @@ echo "Template-instances [success]"
 #copy all web-scripts
 PATHWEB='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit/'
 cp tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit/* ${PATHWEB}
-echo "Site-webscritps [success]"
+echo "Site-webscripts [success]"
 
 #copy all freemarker template
 PATHTMP='/opt/alfresco*/tomcat/webapps/share/WEB-INF/classes/alfresco/templates/org/alfresco/'
