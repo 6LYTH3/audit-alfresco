@@ -32,6 +32,11 @@
 	<span class="label"><label>${msg("label.action")}:</label></span>
 	<span class="input"><input name="action" maxliength="255" size="30" /></span>
      </div>
+     <div class="row">
+         <span class="label"><label>${msg("label.timestemp")}:</label></span>
+         <span class="input"><input name="timestemp" maxliength="255" size="30" /></span>
+      </div>
+
      <div class="buttons">
 	<button name="submit">${msg("button.submit.ok")}</button>
      </div>
