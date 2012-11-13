@@ -51,7 +51,7 @@ if (result.status == status.STATUS_OK)
   var rangeEntries = auditData.entries.length;
   for(i=0;i<rangeEntries;i++){
     var cTime = auditData.entries[i].time.split("-");
-    if(timestemp != "" && timestemp == cTime[2].substring(0,2)){
+    if(timestemp != "" && timestemp[0] == cTime[2].substring(0,2) && timestemp[1] == cTime[1] && timestemp[2] == cTime[0]){
       checkNewData = true;
       newData += "{ 'id' : '"+auditData.entries[i].id+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+auditData.entries[i].time+"', 'values' : { '/auditlogin2/login/user' : '"+auditData.entries[i].values['/auditlogin2/login/user']+"'} },";
     }
@@ -75,6 +75,6 @@ function getTimestemp(times){
     return  "";
   }else{
   var newTime = times.split("-");
-  return (newTime[0]<10)?"0"+newTime[0]:newTime[0];
+  return newTime;
   }
 }

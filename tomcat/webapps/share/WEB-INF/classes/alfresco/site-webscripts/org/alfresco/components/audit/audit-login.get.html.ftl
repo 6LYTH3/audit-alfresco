@@ -48,7 +48,7 @@
 	<td>Id</td> 
         <td>User Name</td>
         <td>Timestamp</td>
-        <td>Value</td>
+        <td>Full Name</td>
    </tr>
    </thead>
    <tbody>
