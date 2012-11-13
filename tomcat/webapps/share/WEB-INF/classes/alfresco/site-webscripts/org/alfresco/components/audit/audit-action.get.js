@@ -38,6 +38,7 @@ function genData(result){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
+			if(i>=98) break;
  			i+=2;
  		}
 

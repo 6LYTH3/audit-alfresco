@@ -99,6 +99,7 @@ function genData(result,checkChoice){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
+			if(i>=98) break;
  			i+=2;
  		}
  		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
@@ -136,11 +137,11 @@ function genData(result,checkChoice){
 			break;
 		}
 
-
-//	if(lastId > 10000){
-//		getData(lastId);
-//	}
-   		}
+	}
+	if(lastId > 10000){
+		getData(lastId);
+	}
+   		
    }
    else
    {
