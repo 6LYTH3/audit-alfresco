@@ -1,6 +1,7 @@
 var user = "";
 var toIdF = "";
 var actionAudit = "";
+var fileFilter = "";
 var newData = "{'entries': [ ";
 var fil = "";
 var timestemp = "";
@@ -29,6 +30,10 @@ for each (field in formdata.fields)
   {
     timestemp = getTimestemp(field.value);
   }  
+  else if (field.name == "fileFilter")
+  {
+    fileFilter = field.value;
+  }
 }
 
 if(user == "&user=")
@@ -102,23 +107,29 @@ function genData(result,checkChoice){
 		switch(checkChoice) {
 			case 1:
 			if(actionDown == actionAudit || actionAudit == ""){
-	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
-					}
-			}
-			break;
-			case 2:
-				if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
+				if(fileFilter == myFile || fileFilter == ""){
 	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
 						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
 					}
 				}
+			}
+			break;
+			case 2:
+			if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
+	 			if(fileFilter == myFile || fileFilter == ""){
+					if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
+						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
+				}
+			}
 			break;
 			case 3:
 			if(actionDown == actionAudit || actionAudit == ""){
 				if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
+					if(fileFilter == myFile || fileFilter == ""){
 	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
 						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
 					}
 				}			
 			}
