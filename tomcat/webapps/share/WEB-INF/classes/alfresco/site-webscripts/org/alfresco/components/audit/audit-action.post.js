@@ -79,7 +79,7 @@ if(actionCheck && (timeCheck == false)){
 function getData(toId){
    var uri = "/api/audit/query/my-app?verbose=true&forward=false&toId="+user+toId;
    var result = remote.call(uri);
-   genData(result);
+   genData(result,choice);
 }
 
 function genData(result,checkChoice){
