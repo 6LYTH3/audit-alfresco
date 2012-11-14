@@ -33,7 +33,16 @@
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.action")}:</label></span>
-	<span class="input"><input name="action" maxliength="255" size="30" /></span>
+	<select name="action" >
+		<option value="">NONE</option>
+                <option value="CREATE">CREATE</option>
+                <option value="READ">READ</option>
+                <option value="UPDATE CONTENT">UPDATE CONTENT</option>
+                <option value="DELETE">DELETE</option>
+                <option value="DOWNLOAD">DOWNLOAD</option>
+                <option value="addNodeAspect">addNodeAspect</option>
+                <option value="updateNodeProperties">updateNodeProperties</option>
+        </select>
      </div>
      <div class="row">
          <span class="label"><label>${msg("label.timestemp")}:</label></span>
