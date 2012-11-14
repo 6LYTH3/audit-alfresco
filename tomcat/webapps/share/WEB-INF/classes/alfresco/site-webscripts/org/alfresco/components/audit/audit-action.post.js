@@ -1,9 +1,13 @@
 var user = "";
 var toIdF = "";
 var actionAudit = "";
+var fileFilter = "";
 var newData = "{'entries': [ ";
 var fil = "";
-
+var timestemp = "";
+var actionCheck = false;
+var timeCheck = false;
+var choice;
 function main()
 {
 
@@ -20,7 +24,15 @@ for each (field in formdata.fields)
   }
   else if (field.name == "action")
   {	
-    actionAudit = field.value+"";
+    actionAudit = field.value;
+  }
+  else if (field.name == "timestemp")
+  {
+    timestemp = getTimestemp(field.value);
+  }  
+  else if (field.name == "fileFilter")
+  {
+    fileFilter = field.value;
   }
 }
 
@@ -32,11 +44,31 @@ if(toIdF == "&toId=")
 {
 	toIdF = "";
 }
+if(actionAudit != "")
+{
+	actionCheck = true;
+}
+if(timestemp != "")
+{
+	timeCheck = true;
+}
+
+
+if(actionCheck && (timeCheck == false)){
+	choice = 1;
+}else if((actionCheck == false) && timeCheck){
+	choice = 2;
+}else if(actionCheck && timeCheck){
+	choice = 3;
+}else{
+	choice = 1;
+}
+
 
 
    var uri = "/api/audit/query/my-app?verbose=true&forward=false"+user+toIdF;
    var result = remote.call(uri);
-   genData(result);
+   genData(result,choice);
 
    newData += " ] }";	
    model.newData = newData;
@@ -47,10 +79,10 @@ if(toIdF == "&toId=")
 function getData(toId){
    var uri = "/api/audit/query/my-app?verbose=true&forward=false&toId="+user+toId;
    var result = remote.call(uri);
-   genData(result);
+   genData(result,choice);
 }
 
-function genData(result){
+function genData(result,checkChoice){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
@@ -58,6 +90,7 @@ function genData(result){
 	var lastId;
 	for(i=0;i<rangeEntries;i++){
 		var times = getTimes(auditData.entries[i].time+"");
+		var timeToAr = auditData.entries[i].time.split("-");
  		var actionDown = auditData.entries[i].values['/my-app/action'];
  		var downToRead = auditData.entries[i].values['/my-app/name'];
 		lastId = auditData.entries[i].id;
@@ -66,19 +99,49 @@ function genData(result){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
+			if(i>=98) break;
  			i+=2;
  		}
  		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
 		var myFile = getFile(auditData.entries[i].values['/my-app/path']+"");
-	if(actionDown == actionAudit || actionAudit == ""){
-	 	if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-			newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+	
+		switch(checkChoice) {
+			case 1:
+			if(actionDown == actionAudit || actionAudit == ""){
+				if(fileFilter == myFile || fileFilter == ""){
+	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
+						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
+				}
+			}
+			break;
+			case 2:
+			if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
+	 			if(fileFilter == myFile || fileFilter == ""){
+					if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
+						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
+				}
+			}
+			break;
+			case 3:
+			if(actionDown == actionAudit || actionAudit == ""){
+				if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
+					if(fileFilter == myFile || fileFilter == ""){
+	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
+						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
+					}
+				}			
+			}
+			break;
 		}
-	}
+
 	}
 	if(lastId > 10000){
 		getData(lastId);
 	}
+   		
    }
    else
    {
@@ -119,5 +182,14 @@ function getFilter(toId){
 }
 function getF(){
 	return fil;
+}
+
+function getTimestemp(times){
+	if(times == ""){
+		return  "";
+	}else{
+	var newTime = times.split("-");
+	return newTime;
+	}
 }
 main();
