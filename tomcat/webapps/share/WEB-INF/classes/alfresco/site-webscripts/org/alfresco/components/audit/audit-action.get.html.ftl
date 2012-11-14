@@ -40,6 +40,10 @@
          <span class="label"><label>${msg("label.file")}:</label></span>
          <span class="input"><input name="fileFilter" maxliength="255" size="30" /></span>
       </div>
+     <div class="row">
+         <span class="label"><label>${msg("label.node")}:</label></span>
+         <span class="input"><input name="nodeFilter" maxliength="255" size="30" /></span>
+      </div>
 
      <div class="buttons">
 	<button name="submit">${msg("button.submit.ok")}</button>
