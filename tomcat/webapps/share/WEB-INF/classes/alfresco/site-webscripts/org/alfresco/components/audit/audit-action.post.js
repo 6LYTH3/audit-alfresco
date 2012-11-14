@@ -200,7 +200,7 @@ function getTimestemp(times){
 	if(times == ""){
 		return  "";
 	}else{
-	var newTime = times.split("-");
+	var newTime = times.split("/");
 	return newTime;
 	}
 }

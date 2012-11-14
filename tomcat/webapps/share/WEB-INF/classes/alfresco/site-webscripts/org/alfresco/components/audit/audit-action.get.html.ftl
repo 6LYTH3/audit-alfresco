@@ -11,6 +11,9 @@
 			 $('#show').hide();
   		});	
 	});
+	$(document).ready(function() {
+                $("#datepicker").datepicker();
+        });
 //]]></script>
 <body>
 <div class="header-bar">${msg("label.appname")}
@@ -34,7 +37,7 @@
      </div>
      <div class="row">
          <span class="label"><label>${msg("label.timestemp")}:</label></span>
-         <span class="input"><input name="timestemp" maxliength="255" size="30" /></span>
+         <span class="input"><input id="datepicker" name="timestemp" maxliength="255" size="30" /></span>
       </div>
      <div class="row">
          <span class="label"><label>${msg("label.file")}:</label></span>
