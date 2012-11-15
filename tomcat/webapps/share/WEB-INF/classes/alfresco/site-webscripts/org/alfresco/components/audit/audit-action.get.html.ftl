@@ -11,6 +11,9 @@
 			 $('#show').hide();
   		});	
 	});
+	$(document).ready(function() {
+                $("#datepicker").datepicker();
+        });
 //]]></script>
 <body>
 <div class="header-bar">${msg("label.appname")}
@@ -30,15 +33,28 @@
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.action")}:</label></span>
-	<span class="input"><input name="action" maxliength="255" size="30" /></span>
+	<select name="action" >
+		<option value="">NONE</option>
+                <option value="CREATE">CREATE</option>
+                <option value="READ">READ</option>
+                <option value="UPDATE CONTENT">UPDATE CONTENT</option>
+                <option value="DELETE">DELETE</option>
+                <option value="DOWNLOAD">DOWNLOAD</option>
+                <option value="addNodeAspect">addNodeAspect</option>
+                <option value="updateNodeProperties">updateNodeProperties</option>
+        </select>
      </div>
      <div class="row">
          <span class="label"><label>${msg("label.timestemp")}:</label></span>
-         <span class="input"><input name="timestemp" maxliength="255" size="30" /></span>
+         <span class="input"><input id="datepicker" name="timestemp" maxliength="255" size="30" /></span>
       </div>
      <div class="row">
          <span class="label"><label>${msg("label.file")}:</label></span>
          <span class="input"><input name="fileFilter" maxliength="255" size="30" /></span>
+      </div>
+     <div class="row">
+         <span class="label"><label>${msg("label.node")}:</label></span>
+         <span class="input"><input name="nodeFilter" maxliength="255" size="30" /></span>
       </div>
 
      <div class="buttons">

@@ -2,6 +2,7 @@ var user = "";
 var toIdF = "";
 var actionAudit = "";
 var fileFilter = "";
+var nodeFilter = "";
 var newData = "{'entries': [ ";
 var fil = "";
 var timestemp = "";
@@ -33,6 +34,10 @@ for each (field in formdata.fields)
   else if (field.name == "fileFilter")
   {
     fileFilter = field.value;
+  }
+  else if (field.name == "nodeFilter")
+  {
+    nodeFilter = field.value+"";
   }
 }
 
@@ -104,13 +109,16 @@ function genData(result,checkChoice){
  		}
  		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
 		var myFile = getFile(auditData.entries[i].values['/my-app/path']+"");
-	
+		var checkNode = myPath.split("/").indexOf(nodeFilter);	
+
 		switch(checkChoice) {
 			case 1:
 			if(actionDown == actionAudit || actionAudit == ""){
 				if(fileFilter == myFile || fileFilter == ""){
+					if(checkNode > 0 || nodeFilter == ""){
 	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
 						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
 					}
 				}
 			}
@@ -118,8 +126,10 @@ function genData(result,checkChoice){
 			case 2:
 			if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
 	 			if(fileFilter == myFile || fileFilter == ""){
+					if(checkNode > 0 || nodeFilter == ""){
 					if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
 						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+					}
 					}
 				}
 			}
@@ -128,9 +138,11 @@ function genData(result,checkChoice){
 			if(actionDown == actionAudit || actionAudit == ""){
 				if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
 					if(fileFilter == myFile || fileFilter == ""){
-	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
+						if(checkNode > 0 || nodeFilter == ""){
+	 					if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
 						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
-					}
+						}
+						}
 					}
 				}			
 			}
@@ -188,7 +200,7 @@ function getTimestemp(times){
 	if(times == ""){
 		return  "";
 	}else{
-	var newTime = times.split("-");
+	var newTime = times.split("/");
 	return newTime;
 	}
 }
