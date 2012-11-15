@@ -22,11 +22,11 @@
      <form action="${url.service}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
      <div class="row">
 	<span class="label"><label>${msg("label.toid")}:</label></span>
-	<span class="input"><input name="toid" maxliength="255" size="30" /></span>
+	<span class="input"><input name="toid" maxliength="255" size="30" value placeholder="Jump to Id" /></span>
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.value")}:</label></span>
-	<span class="input"><input name="valueAudit" maxliength="255" size="30" /></span>
+	<span class="input"><input name="valueAudit" maxliength="255" size="30" value placeholder="Missing password" /></span>
      </div>
      <div class="buttons">
 	<button name="submit">${msg("button.submit.ok")}</button>
