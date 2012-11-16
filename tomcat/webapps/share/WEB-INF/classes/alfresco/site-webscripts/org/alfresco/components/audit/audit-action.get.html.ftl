@@ -12,8 +12,8 @@
   		});	
 	});
 	$(document).ready(function() {
-                $("#datepicker").datepicker();
-        });
+        	$("#datepicker").datepicker();
+    	});
 //]]></script>
 <body>
 <div class="header-bar">${msg("label.appname")}
@@ -29,34 +29,40 @@
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.toid")}:</label></span>
-	<span class="input"><input name="toid" maxliength="255" size="30" value placeholder="Jump to Id" /></span>
+	<span class="input"><input name="toid" maxliength="255" size="30" value placeholder="Jump to id" /></span>
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.action")}:</label></span>
-	<select name="action" >
+       	<select name="action" >
 		<option value="">NONE</option>
-                <option value="CREATE">CREATE</option>
-                <option value="READ">READ</option>
-                <option value="UPDATE CONTENT">UPDATE CONTENT</option>
-                <option value="DELETE">DELETE</option>
-                <option value="DOWNLOAD">DOWNLOAD</option>
-                <option value="addNodeAspect">addNodeAspect</option>
-                <option value="updateNodeProperties">updateNodeProperties</option>
+		<option value="CREATE">CREATE</option>
+		<option value="READ">READ</option>
+		<option value="DELETE">DELETE</option>
+		<option value="COPY">COPY</option>
+		<option value="MOVE">MOVE</option>
+		<option value="DOWNLOAD">DOWNLOAD</option>
+		<option value="CREATE VERSION">CREATE VERSION</option>
+		<option value="UPDATE CONTENT">UPDATE CONTENT</option>
+		<option value="CHECK IN">CHECK IN</option>
+		<option value="CHECK OUT">CHECK OUT</option>
+		<option value="CANCEL CHECK OUT">CANCEL CHECK OUT</option>
+		<option value="addNodeAspect">addNodeAspect</option>
+		<option value="updateNodeProperties">updateNodeProperties</option>
         </select>
      </div>
      <div class="row">
-         <span class="label"><label>${msg("label.timestemp")}:</label></span>
-         <span class="input"><input id="datepicker" name="timestemp" maxliength="255" size="30" /></span>
-      </div>
+	<span class="label"><label>${msg("label.timestemp")}:</label></span>
+	<span class="input"><input id="datepicker" name="timestemp" maxliength="255" size="30" /></span>
+     </div>
+      <div class="row">
+	<span class="label"><label>${msg("label.file")}:</label></span>
+	<span class="input"><input name="fileFilter" maxliength="255" size="30" value placeholder="Write a file target" /></span>
+     </div>
      <div class="row">
-         <span class="label"><label>${msg("label.file")}:</label></span>
-         <span class="input"><input name="fileFilter" maxliength="255" size="30" value placeholder="Write a file target"/></span>
-      </div>
-     <div class="row">
-         <span class="label"><label>${msg("label.node")}:</label></span>
-         <span class="input"><input name="nodeFilter" maxliength="255" size="30" value placeholder="Write a folder target" /></span>
-      </div>
-
+	<span class="label"><label>${msg("label.node")}:</label></span>
+	<span class="input"><input name="nodeFilter" maxliength="255" size="30" value placeholder="Write a folder target" /></span>
+     </div>
+              
      <div class="buttons">
 	<button name="submit">${msg("button.submit.ok")}</button>
      </div>
