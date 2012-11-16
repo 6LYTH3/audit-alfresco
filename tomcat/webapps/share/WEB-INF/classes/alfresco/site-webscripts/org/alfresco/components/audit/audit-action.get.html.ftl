@@ -25,11 +25,11 @@
      <form action="${url.service}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
      <div class="row">
        	<span class="label"><label>${msg("label.user")}:</label></span>
-       	<span class="input"><input name="user" maxliength="255" size="30" /></span>
+       	<span class="input"><input name="user" maxliength="255" size="30" value placeholder="Write a user name" /></span>
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.toid")}:</label></span>
-	<span class="input"><input name="toid" maxliength="255" size="30" /></span>
+	<span class="input"><input name="toid" maxliength="255" size="30" value placeholder="Jump to Id" /></span>
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.action")}:</label></span>
@@ -50,11 +50,11 @@
       </div>
      <div class="row">
          <span class="label"><label>${msg("label.file")}:</label></span>
-         <span class="input"><input name="fileFilter" maxliength="255" size="30" /></span>
+         <span class="input"><input name="fileFilter" maxliength="255" size="30" value placeholder="Write a file target"/></span>
       </div>
      <div class="row">
          <span class="label"><label>${msg("label.node")}:</label></span>
-         <span class="input"><input name="nodeFilter" maxliength="255" size="30" /></span>
+         <span class="input"><input name="nodeFilter" maxliength="255" size="30" value placeholder="Write a folder target" /></span>
       </div>
 
      <div class="buttons">

@@ -1,5 +1,6 @@
 var toId = "";
 var valueAudit = "";
+var timestemp = "";
 
 // locate file attributes
 for each (field in formdata.fields)
@@ -11,6 +12,10 @@ for each (field in formdata.fields)
   else if (field.name == "valueAudit")
   {	
     valueAudit = "&value="+field.value;
+  }
+  else if (field.name == "timestemp")
+  {
+    timestemp = getTimestemp(field.value);
   }
 }
 
@@ -28,11 +33,26 @@ if(valueAudit == "&value=")
 var uri = "/api/audit/query/AuditLogin1?verbose=true&forward=false"+toId+valueAudit;
 var connector = remote.connect("alfresco");
 var result = connector.get(uri);
+var newData = "{'entries': [ ";
+var checkNewData = false;
 
 if (result.status == status.STATUS_OK)
 {
-     var auditData = eval("(" + result.response + ")");
-     model.auditData = auditData.entries;
+     	var auditData = eval("(" + result.response + ")");
+	var rangeEntries = auditData.entries.length;
+	for(i=0;i<rangeEntries;i++){
+		var cTime = auditData.entries[i].time.split("-");
+		if(timestemp != "" && timestemp[0] == cTime[2].substring(0,2) && timestemp[1] == cTime[1] && timestemp[2] == cTime[0]){
+			checkNewData = true;
+			newData += "{ 'id' : '"+auditData.entries[i].id+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+auditData.entries[i].time+"', 'values' : { '/auditlogin1/login/error/user' : '"+auditData.entries[i].values['/auditlogin1/login/error/user']+"'} },";
+		}
+	}
+	newData += " ] }";
+	if(checkNewData){
+	model.auditData = eval("(" + newData + ")");
+	}else{
+	model.auditData = auditData;
+	}
 }
 else
 {
@@ -40,3 +60,11 @@ else
     status.redirect = true;
 }
 
+function getTimestemp(times){
+	if(times == ""){
+		return  "";
+	}else{
+	var newTime = times.split("/");
+	return newTime;
+	}
+}
