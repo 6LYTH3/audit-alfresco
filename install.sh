@@ -3,13 +3,16 @@
 #default environment alfresco
 # * is the your alfresco version
 
-#find alfreso
+#find alfresco
 FINDALF=`ls /opt/ | grep alfresco`
 
 #create audit folder
 mkdir -p /opt/$FINDALF/tomcat/webapps/share/components/audit
 mkdir -p /opt/$FINDALF/tomcat/webapps/share/WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/audit
 #mkdir /opt/alfresco*/tomcat/shared/classes/alfresco/extension/audit
+
+#Configuration Audit enable
+echo "audit.enabled=true" >> /opt/$FINDALF/tomcat/shared/classes/alfresco-global.properties
 
 #copy all application and config
 PATHAPP='/opt/$FINDALF/tomcat/shared/classes/alfresco/extension/'
