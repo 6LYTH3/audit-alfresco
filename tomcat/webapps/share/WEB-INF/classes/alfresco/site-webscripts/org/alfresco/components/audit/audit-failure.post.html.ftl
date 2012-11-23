@@ -21,7 +21,7 @@
    </tr>
    </thead>
    <tbody>
-	<#list auditData as app>
+	<#list auditData.entries as app>
 	<tr>
      		<td>${app.id}</td>
      		<td>${app.time?substring(0, 19)}</td>
