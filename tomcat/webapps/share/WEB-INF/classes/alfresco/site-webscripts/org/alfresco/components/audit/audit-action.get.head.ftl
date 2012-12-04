@@ -7,4 +7,3 @@
 <@script type="text/javascript" src="${page.url.context}/res/components/audit/paginator.js"></@script>
 <@script type="text/javascript" src="${page.url.context}/res/components/audit/datepicker.js"></@script>
 
-
