@@ -27,6 +27,7 @@ if(valueAudit == "&value=")
 {
 	valueAudit = "";
 }
+
 // get the live list from the repo of currently registered audit applications
 // requires to be logged in as an admin user
 // remote.call(uri);
@@ -39,8 +40,7 @@ var checkNewData = false;
 if (result.status == status.STATUS_OK)
 {
      	var auditData = eval("(" + result.response + ")");
-	var rangeEntries = auditData.entries.length;
-	for(i=0;i<rangeEntries;i++){
+	for(i = 0; i < auditData.entries.length; i++){
 		var cTime = auditData.entries[i].time.split("-");
 		if(timestemp != "" && timestemp[0] == cTime[2].substring(0,2) && timestemp[1] == cTime[1] && timestemp[2] == cTime[0]){
 			checkNewData = true;
@@ -48,11 +48,8 @@ if (result.status == status.STATUS_OK)
 		}
 	}
 	newData += " ] }";
-	if(checkNewData){
-	model.auditData = eval("(" + newData + ")");
-	}else{
-	model.auditData = auditData;
-	}
+	nAudit = eval("(" + newData + ")");
+	model.auditData = (checkNewData) ? nAudit : auditData;
 }
 else
 {
