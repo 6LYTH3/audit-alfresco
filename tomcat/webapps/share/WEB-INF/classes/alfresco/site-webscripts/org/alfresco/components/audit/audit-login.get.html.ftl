@@ -12,8 +12,8 @@
   		});	
 	});
 	$(document).ready(function() {
-                $("#datepicker").datepicker();
-        });
+        	$("#datepicker").datepicker();
+    	});
 //]]></script>
 <body>
 <div class="header-bar">${msg("label.appname")}
@@ -29,16 +29,17 @@
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.toid")}:</label></span>
-	<span class="input"><input name="toid" maxliength="255" size="30" value placeholder="Jump to Id" /></span>
+	<span class="input"><input name="toid" maxliength="255" size="30" value placeholder="Jump to id" /></span>
      </div>
      <div class="row">
 	<span class="label"><label>${msg("label.value")}:</label></span>
-	<span class="input"><input name="valueAudit" maxliength="255" size="30" value placeholder="Full Name" /></span>
-     </div>
+	<span class="input"><input name="valueAudit" maxliength="255" size="30" value placeholder="Full name"/></span>
+     </div>    
      <div class="row">
 	<span class="label"><label>${msg("label.timestemp")}:</label></span>
 	<span class="input"><input id="datepicker" name="timestemp" maxliength="255" size="30" /></span>
      </div>
+     
      <div class="buttons">
 	<button name="submit">${msg("button.submit.ok")}</button>
      </div>

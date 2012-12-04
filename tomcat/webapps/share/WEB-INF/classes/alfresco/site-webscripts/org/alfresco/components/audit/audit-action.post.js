@@ -4,11 +4,8 @@ var actionAudit = "";
 var fileFilter = "";
 var nodeFilter = "";
 var newData = "{'entries': [ ";
-var fil = "";
 var timestemp = "";
-var actionCheck = false;
-var timeCheck = false;
-var choice;
+
 function main()
 {
 
@@ -49,52 +46,29 @@ if(toIdF == "&toId=")
 {
 	toIdF = "";
 }
-if(actionAudit != "")
-{
-	actionCheck = true;
-}
-if(timestemp != "")
-{
-	timeCheck = true;
-}
-
-
-if(actionCheck && (timeCheck == false)){
-	choice = 1;
-}else if((actionCheck == false) && timeCheck){
-	choice = 2;
-}else if(actionCheck && timeCheck){
-	choice = 3;
-}else{
-	choice = 1;
-}
-
 
 
    var uri = "/api/audit/query/my-app?verbose=true&forward=false"+user+toIdF;
    var result = remote.call(uri);
-   genData(result,choice);
+   generateData(result);
 
    newData += " ] }";	
-   model.newData = newData;
    model.result = eval("(" + newData + ")");
-   model.toId = getF();
 }
 
-function getData(toId){
+function recall(toId){
    var uri = "/api/audit/query/my-app?verbose=true&forward=false&toId="+user+toId;
    var result = remote.call(uri);
-   genData(result,choice);
+   generateData(result);
 }
 
-function genData(result,checkChoice){
+function generateData(result){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
-	var rangeEntries = auditData.entries.length;
 	var lastId;
-	for(i=0;i<rangeEntries;i++){
-		var times = getTimes(auditData.entries[i].time+"");
+	for(i = 0; i < auditData.entries.length; i++){
+		var times = getTimes(String(auditData.entries[i].time));
 		var timeToAr = auditData.entries[i].time.split("-");
  		var actionDown = auditData.entries[i].values['/my-app/action'];
  		var downToRead = auditData.entries[i].values['/my-app/name'];
@@ -104,16 +78,15 @@ function genData(result,checkChoice){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
-			if(i>=98) break;
+			if (i >= 97) break;
  			i+=2;
  		}
- 		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
-		var myFile = getFile(auditData.entries[i].values['/my-app/path']+"");
-		var checkNode = myPath.split("/").indexOf(nodeFilter);	
+ 		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
+		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));
+		var checkNode = myPath.split("/").indexOf(nodeFilter);
 
-		switch(checkChoice) {
-			case 1:
-			if(actionDown == actionAudit || actionAudit == ""){
+		if(actionDown == actionAudit || actionAudit == ""){
+			if((timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]) || (timestemp == "")){
 				if(fileFilter == myFile || fileFilter == ""){
 					if(checkNode > 0 || nodeFilter == ""){
 	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
@@ -121,39 +94,13 @@ function genData(result,checkChoice){
 					}
 					}
 				}
-			}
-			break;
-			case 2:
-			if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
-	 			if(fileFilter == myFile || fileFilter == ""){
-					if(checkNode > 0 || nodeFilter == ""){
-					if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
-					}
-					}
-				}
-			}
-			break;
-			case 3:
-			if(actionDown == actionAudit || actionAudit == ""){
-				if(timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]){
-					if(fileFilter == myFile || fileFilter == ""){
-						if(checkNode > 0 || nodeFilter == ""){
-	 					if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
-						}
-						}
-					}
-				}			
-			}
-			break;
+			}			
 		}
+}
 
-	}
-	if(lastId > 10000){
-		getData(lastId);
-	}
-   		
+		if(lastId > 10000){
+			recall(lastId);
+			}
    }
    else
    {
@@ -188,13 +135,6 @@ function getFile(paths)
 	var lastIndex = pathsToAr.length-1;
 	return pathsToAr[lastIndex];
 }	
-
-function getFilter(toId){
-	 fil = toId;
-}
-function getF(){
-	return fil;
-}
 
 function getTimestemp(times){
 	if(times == ""){

@@ -1,5 +1,15 @@
 var newData = "{'entries': [ ";
-var fil = "";
+//var entries = [];
+//var newData = {
+//		'id':"",
+//		'user':"",
+//		'time':"",
+//		'values': {
+//		 	'action':"",
+//			'file':"",
+//			'path':""
+//		}
+//	};
 
 function main()
 {
@@ -7,29 +17,27 @@ function main()
    model.pass = "args.oldpassword";
    var uri = "/api/audit/query/my-app?verbose=true&forward=false";
    var result = remote.call(uri);
-   genData(result);
+   generateData(result);
 
    newData += " ] }";	
-   model.newData = newData;
    model.result = eval("(" + newData + ")");
-   model.toId = getF();
+   //model.result = entries;
 }
 
-function getData(toId){
+function recall(toId){
    var uri = "/api/audit/query/my-app?verbose=true&forward=false&toId="+toId;
    var result = remote.call(uri);
-   genData(result);
+   generateData(result);
 }
 
-function genData(result){
+function generateData(result){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
-	var rangeEntries = auditData.entries.length;
 	var lastId;
 	var nId;
-	for(i=0;i<rangeEntries;i++){
-		var times = getTimes(auditData.entries[i].time+"");
+	for(var i = 0; i < auditData.entries.length; i++){
+		var times = getTimes(String(auditData.entries[i].time));
  		var actionDown = auditData.entries[i].values['/my-app/action'];
  		var downToRead = auditData.entries[i].values['/my-app/name'];
 		nId = auditData.entries[i].id;
@@ -38,19 +46,26 @@ function genData(result){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
-			if(i>=98) break;
+			if(i >= 97) break;
  			i+=2;
  		}
-
- 		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
-		var myFile = getFile(auditData.entries[i].values['/my-app/path']+"");
+		
+ 		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
+		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));
 	 	if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
 			newData += "{ 'id' : '"+nId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+//			newData.id = nId;
+//			newData.user = auditData.entries[i].user;
+//			newData.time = times;
+//			newData.values['action'] = actionDown;
+//			newData.values['file'] = String(myFile);
+//			newData.values['path'] = String(myPath);
+//			entries.push(newData);
 		}
 		lastId = auditData.entries[i].id;
 	}
 	if(lastId > 10000){
-		getData(lastId);
+		recall(lastId);
 	}
    }
    else
@@ -86,11 +101,4 @@ function getFile(paths)
 	var lastIndex = pathsToAr.length-1;
 	return pathsToAr[lastIndex];
 }	
-
-function getFilter(toId){
-	 fil = toId;
-}
-function getF(){
-	return fil;
-}
 main();
