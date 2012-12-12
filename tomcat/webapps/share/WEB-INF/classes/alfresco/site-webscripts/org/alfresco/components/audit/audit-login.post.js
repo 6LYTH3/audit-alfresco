@@ -43,7 +43,7 @@ if(valueAudit == "&value=")
 var uri = "/api/audit/query/AuditLogin2?verbose=true&forward=false"+user+toId+valueAudit;
 var connector = remote.connect("alfresco");
 var result = connector.get(uri);
-var newData = "{'entries': [ ";
+var entries = [];
 var checkNewData = false;
 
 if (result.status == status.STATUS_OK)
@@ -53,12 +53,17 @@ if (result.status == status.STATUS_OK)
 		var cTime = auditData.entries[i].time.split("-");
 		if(timestemp != "" && timestemp[0] == cTime[2].substring(0,2) && timestemp[1] == cTime[1] && timestemp[2] == cTime[0]){
 			checkNewData = true;
-			newData += "{ 'id' : '"+auditData.entries[i].id+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+auditData.entries[i].time+"', 'values' : { '/auditlogin2/login/user' : '"+auditData.entries[i].values['/auditlogin2/login/user']+"'} },";
+			entries.push({
+				id: auditData.entries[i].id,
+				user: auditData.entries[i].user,
+				time: auditData.entries[i].time,
+				values: {
+					'/auditlogin2/login/user': auditData.entries[i].values['/auditlogin2/login/user']
+				}
+			});			
 		}
 	}
-	newData += " ] }";
-	nAudit = eval("(" + newData + ")");
-	model.auditData = (checkNewData) ? nAudit : auditData;
+	model.auditData = (checkNewData) ? entries : auditData.entries;
 }
 else
 {

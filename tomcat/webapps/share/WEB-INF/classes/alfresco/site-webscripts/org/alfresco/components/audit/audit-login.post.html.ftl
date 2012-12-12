@@ -23,7 +23,7 @@
    </thead>
    <tbody>
 
-	<#list auditData.entries as app>
+	<#list auditData as app>
 	<tr>
      		<td>${app.id}</td>
      		<td>${app.user}</td>

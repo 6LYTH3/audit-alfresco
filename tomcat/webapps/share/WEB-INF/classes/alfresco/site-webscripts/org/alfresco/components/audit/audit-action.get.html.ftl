@@ -80,7 +80,7 @@
    </tr>
    </thead>
    <tbody>
-	<#list result.entries as app>
+	<#list result as app>
 	<tr>
      		<td>${app.id}</td>
 		<td>${app.user}</td>

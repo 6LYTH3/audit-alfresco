@@ -3,7 +3,7 @@ var toIdF = "";
 var actionAudit = "";
 var fileFilter = "";
 var nodeFilter = "";
-var newData = "{'entries': [ ";
+var entries = [];
 var timestemp = "";
 
 function main()
@@ -51,9 +51,7 @@ if(toIdF == "&toId=")
    var uri = "/api/audit/query/my-app?verbose=true&forward=false"+user+toIdF;
    var result = remote.call(uri);
    generateData(result);
-
-   newData += " ] }";	
-   model.result = eval("(" + newData + ")");
+   model.result = entries;
 }
 
 function recall(toId){
@@ -90,17 +88,26 @@ function generateData(result){
 				if(fileFilter == myFile || fileFilter == ""){
 					if(checkNode > 0 || nodeFilter == ""){
 	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-						newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+						entries.push({  
+                               				id: lastId,
+			                                user:  auditData.entries[i].user,
+			                                time:  times,
+			                                values: {
+			                                        action: actionDown,
+                        			       		file:  String(myFile),
+                                         			path: String(myPath)
+                                 		}       
+                        		 });             
 					}
 					}
 				}
 			}			
 		}
-}
+	}
 
 		if(lastId > 10000){
 			recall(lastId);
-			}
+		}
    }
    else
    {

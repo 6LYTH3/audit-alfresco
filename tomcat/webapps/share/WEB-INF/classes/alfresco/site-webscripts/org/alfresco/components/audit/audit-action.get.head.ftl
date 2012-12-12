@@ -6,4 +6,4 @@
 <@script type="text/javascript" src="${page.url.context}/jquery/jquery-1.6.2.js"></@script>
 <@script type="text/javascript" src="${page.url.context}/res/components/audit/paginator.js"></@script>
 <@script type="text/javascript" src="${page.url.context}/res/components/audit/datepicker.js"></@script>
-
+<@script type="text/javascript" src="${page.url.context}/res/components/audit/xml2json.js"></@script>

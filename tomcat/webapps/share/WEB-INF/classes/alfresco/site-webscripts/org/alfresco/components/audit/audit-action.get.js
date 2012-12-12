@@ -1,27 +1,12 @@
-var newData = "{'entries': [ ";
-//var entries = [];
-//var newData = {
-//		'id':"",
-//		'user':"",
-//		'time':"",
-//		'values': {
-//		 	'action':"",
-//			'file':"",
-//			'path':""
-//		}
-//	};
+var entries = [];
 
 function main()
 {
 
-   model.pass = "args.oldpassword";
    var uri = "/api/audit/query/my-app?verbose=true&forward=false";
    var result = remote.call(uri);
    generateData(result);
-
-   newData += " ] }";	
-   model.result = eval("(" + newData + ")");
-   //model.result = entries;
+   model.result = entries;
 }
 
 function recall(toId){
@@ -53,14 +38,16 @@ function generateData(result){
  		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
 		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));
 	 	if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-			newData += "{ 'id' : '"+nId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
-//			newData.id = nId;
-//			newData.user = auditData.entries[i].user;
-//			newData.time = times;
-//			newData.values['action'] = actionDown;
-//			newData.values['file'] = String(myFile);
-//			newData.values['path'] = String(myPath);
-//			entries.push(newData);
+			entries.push({
+				id: nId,
+				user:  auditData.entries[i].user,
+				time:  times,
+				values: { 
+					action: actionDown,
+					file:  String(myFile),
+					path: String(myPath)
+				}
+			});
 		}
 		lastId = auditData.entries[i].id;
 	}
@@ -102,3 +89,16 @@ function getFile(paths)
 	return pathsToAr[lastIndex];
 }	
 main();
+
+// CMIS Query Language
+// Query All type
+
+//function main(){
+//   var uri = "/cmis/query?q=SELECT%20F.*%20FROM%20cmis:folder%20F&format=json";
+//   var result = remote.call(uri);
+//   var json = jsonUtils.toJSONString(result);
+//   var Obj = eval('(' +json+ ')');
+////   model.result = Obj.info.author;
+//   model.result = Obj; 
+//}
+//main();
