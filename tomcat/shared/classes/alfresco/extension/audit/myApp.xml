@@ -10,7 +10,7 @@ xsi:schemaLocation="http://www.alfresco.org/repo/audit/model/3.2 alfresco-audit-
 
 <PathMappings>
 	<PathMap source="/alfresco-access" target="/my-app" />
-	<PathMap source="/alfresco-api/post/ContentService/getReader" target="/my-app"/>
+	<PathMap source="/alfresco-api/post/ThumbnailService/getThumbnailByName" target="/my-app"/>
 </PathMappings>
 
 <Application name="my-app" key="my-app">
@@ -18,7 +18,7 @@ xsi:schemaLocation="http://www.alfresco.org/repo/audit/model/3.2 alfresco-audit-
 <RecordValue key="action" dataExtractor="simpleValue" dataSource="/my-app/transaction/action" dataTrigger="/my-app/transaction/action" />
 <RecordValue key="user" dataExtractor="simpleValue" dataSource="/my-app/transaction/user" dataTrigger="/my-app/transaction/user" />
 <RecordValue key="path" dataExtractor="simpleValue" dataSource="/my-app/transaction/path" dataTrigger="/my-app/transaction/path" />
-<RecordValue key="name" dataExtractor="nodeNameValue" dataSource="/my-app/args/nodeRef" dataTrigger="/my-app/no-error"/>
+<RecordValue key="name" dataExtractor="simpleValue" dataSource="/my-app/args/thumbnailName" dataTrigger="/my-app/no-error"/>
 </Application>
 
 </Audit>

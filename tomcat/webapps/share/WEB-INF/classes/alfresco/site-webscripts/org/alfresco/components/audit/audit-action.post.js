@@ -76,8 +76,8 @@ function generateData(result){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
-			if (i >= 97) break;
- 			i+=2;
+			if (i >= 98) break;
+ 			i+=1;
  		}
  		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
 		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));

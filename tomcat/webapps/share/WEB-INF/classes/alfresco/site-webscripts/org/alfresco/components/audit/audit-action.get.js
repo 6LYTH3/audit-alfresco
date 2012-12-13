@@ -31,8 +31,8 @@ function generateData(result){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
-			if(i >= 97) break;
- 			i+=2;
+			if(i >= 98) break;
+ 			i+=1;
  		}
 		
  		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
@@ -89,16 +89,3 @@ function getFile(paths)
 	return pathsToAr[lastIndex];
 }	
 main();
-
-// CMIS Query Language
-// Query All type
-
-//function main(){
-//   var uri = "/cmis/query?q=SELECT%20F.*%20FROM%20cmis:folder%20F&format=json";
-//   var result = remote.call(uri);
-//   var json = jsonUtils.toJSONString(result);
-//   var Obj = eval('(' +json+ ')');
-////   model.result = Obj.info.author;
-//   model.result = Obj; 
-//}
-//main();
