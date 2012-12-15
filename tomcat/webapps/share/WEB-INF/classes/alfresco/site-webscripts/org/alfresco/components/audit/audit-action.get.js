@@ -19,7 +19,6 @@ function generateData(result){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
-	var lastId;
 	var nId;
 	for(var i = 0; i < auditData.entries.length; i++){
 		var times = getTimes(String(auditData.entries[i].time));
@@ -49,10 +48,9 @@ function generateData(result){
 				}
 			});
 		}
-		lastId = auditData.entries[i].id;
 	}
-	if(lastId > 10000){
-		recall(lastId);
+	if(nId > 100 && entries.length < 99){
+		recall(nId);
 	}
    }
    else

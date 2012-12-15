@@ -64,20 +64,19 @@ function generateData(result){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
-	var lastId;
 	for(i = 0; i < auditData.entries.length; i++){
+		var lastId = auditData.entries[i].id;
 		var times = getTimes(String(auditData.entries[i].time));
 		var timeToAr = auditData.entries[i].time.split("-");
  		var actionDown = auditData.entries[i].values['/my-app/action'];
  		var downToRead = auditData.entries[i].values['/my-app/name'];
-		lastId = auditData.entries[i].id;
  		if (actionDown == "READ") {
  			actionDown = "DOWNLOAD";
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
-			if (i >= 98) break;
  			i+=1;
+			if (i >= 98) break;
  		}
  		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
 		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));
@@ -105,7 +104,7 @@ function generateData(result){
 		}
 	}
 
-		if(lastId > 10000){
+		if(lastId > 100 && entries.length < 99){
 			recall(lastId);
 		}
    }
