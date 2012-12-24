@@ -1,35 +1,27 @@
-var newData = "{'entries': [ ";
-var fil = "";
+var entries = [];
 
 function main()
 {
 
-   model.pass = "args.oldpassword";
    var uri = "/api/audit/query/my-app?verbose=true&forward=false";
    var result = remote.call(uri);
-   genData(result);
-
-   newData += " ] }";	
-   model.newData = newData;
-   model.result = eval("(" + newData + ")");
-   model.toId = getF();
+   generateData(result);
+   model.result = entries;
 }
 
-function getData(toId){
+function recall(toId){
    var uri = "/api/audit/query/my-app?verbose=true&forward=false&toId="+toId;
    var result = remote.call(uri);
-   genData(result);
+   generateData(result);
 }
 
-function genData(result){
+function generateData(result){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
-	var rangeEntries = auditData.entries.length;
-	var lastId;
 	var nId;
-	for(i=0;i<rangeEntries;i++){
-		var times = getTimes(auditData.entries[i].time+"");
+	for(var i = 0; i < auditData.entries.length; i++){
+		var times = getTimes(String(auditData.entries[i].time));
  		var actionDown = auditData.entries[i].values['/my-app/action'];
  		var downToRead = auditData.entries[i].values['/my-app/name'];
 		nId = auditData.entries[i].id;
@@ -38,18 +30,27 @@ function genData(result){
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
- 			i+=2;
+			if(i >= 98) break;
+ 			i+=1;
  		}
-
- 		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
-		var myFile = getFile(auditData.entries[i].values['/my-app/path']+"");
+		
+ 		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
+		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));
 	 	if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-			newData += "{ 'id' : '"+nId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+			entries.push({
+				id: nId,
+				user:  auditData.entries[i].user,
+				time:  times,
+				values: { 
+					action: actionDown,
+					file:  String(myFile),
+					path: String(myPath)
+				}
+			});
 		}
-		lastId = auditData.entries[i].id;
 	}
-	if(lastId > 10000){
-		getData(lastId);
+	if(nId > 100 && entries.length < 99){
+		recall(nId);
 	}
    }
    else
@@ -85,11 +86,4 @@ function getFile(paths)
 	var lastIndex = pathsToAr.length-1;
 	return pathsToAr[lastIndex];
 }	
-
-function getFilter(toId){
-	 fil = toId;
-}
-function getF(){
-	return fil;
-}
 main();

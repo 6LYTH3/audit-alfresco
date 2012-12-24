@@ -1,8 +1,10 @@
 var user = "";
 var toIdF = "";
 var actionAudit = "";
-var newData = "{'entries': [ ";
-var fil = "";
+var fileFilter = "";
+var nodeFilter = "";
+var entries = [];
+var timestemp = "";
 
 function main()
 {
@@ -20,7 +22,19 @@ for each (field in formdata.fields)
   }
   else if (field.name == "action")
   {	
-    actionAudit = field.value+"";
+    actionAudit = field.value;
+  }
+  else if (field.name == "timestemp")
+  {
+    timestemp = getTimestemp(field.value);
+  }  
+  else if (field.name == "fileFilter")
+  {
+    fileFilter = field.value;
+  }
+  else if (field.name == "nodeFilter")
+  {
+    nodeFilter = field.value+"";
   }
 }
 
@@ -36,49 +50,63 @@ if(toIdF == "&toId=")
 
    var uri = "/api/audit/query/my-app?verbose=true&forward=false"+user+toIdF;
    var result = remote.call(uri);
-   genData(result);
-
-   newData += " ] }";	
-   model.newData = newData;
-   model.result = eval("(" + newData + ")");
-   model.toId = getF();
+   generateData(result);
+   model.result = entries;
 }
 
-function getData(toId){
+function recall(toId){
    var uri = "/api/audit/query/my-app?verbose=true&forward=false&toId="+user+toId;
    var result = remote.call(uri);
-   genData(result);
+   generateData(result);
 }
 
-function genData(result){
+function generateData(result){
    if (result.status == status.STATUS_OK)
    {
      	var auditData = eval("(" + result.response + ")");
-	var rangeEntries = auditData.entries.length;
-	var lastId;
-	for(i=0;i<rangeEntries;i++){
-		var times = getTimes(auditData.entries[i].time+"");
+	for(i = 0; i < auditData.entries.length; i++){
+		var lastId = auditData.entries[i].id;
+		var times = getTimes(String(auditData.entries[i].time));
+		var timeToAr = auditData.entries[i].time.split("-");
  		var actionDown = auditData.entries[i].values['/my-app/action'];
  		var downToRead = auditData.entries[i].values['/my-app/name'];
-		lastId = auditData.entries[i].id;
  		if (actionDown == "READ") {
  			actionDown = "DOWNLOAD";
  		}
  		if (downToRead == "imgpreview" || downToRead == "webpreview") {
  			actionDown = "READ";
- 			i+=2;
+ 			i+=1;
+			if (i >= 98) break;
  		}
- 		var myPath = getPath(auditData.entries[i].values['/my-app/path']+"");
-		var myFile = getFile(auditData.entries[i].values['/my-app/path']+"");
-	if(actionDown == actionAudit || actionAudit == ""){
-	 	if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
-			newData += "{ 'id' : '"+lastId+"' ,'user' : '"+auditData.entries[i].user+"', 'time' : '"+times+"', 'values' : { 'action' : '"+actionDown+"','file' : '"+myFile+"','path' :'"+ myPath+"'} },";
+ 		var myPath = getPath(String(auditData.entries[i].values['/my-app/path']));
+		var myFile = getFile(String(auditData.entries[i].values['/my-app/path']));
+		var checkNode = myPath.split("/").indexOf(nodeFilter);
+
+		if(actionDown == actionAudit || actionAudit == ""){
+			if((timestemp[0] == timeToAr[2].substring(0,2) && timestemp[1] == timeToAr[1] && timestemp[2] == timeToAr[0]) || (timestemp == "")){
+				if(fileFilter == myFile || fileFilter == ""){
+					if(checkNode > 0 || nodeFilter == ""){
+	 				if (auditData.entries[i].values['/my-app/action']+"" != "undefined") {
+						entries.push({  
+                               				id: lastId,
+			                                user:  auditData.entries[i].user,
+			                                time:  times,
+			                                values: {
+			                                        action: actionDown,
+                        			       		file:  String(myFile),
+                                         			path: String(myPath)
+                                 		}       
+                        		 });             
+					}
+					}
+				}
+			}			
 		}
 	}
-	}
-	if(lastId > 10000){
-		getData(lastId);
-	}
+
+		if(lastId > 100 && entries.length < 99){
+			recall(lastId);
+		}
    }
    else
    {
@@ -114,10 +142,12 @@ function getFile(paths)
 	return pathsToAr[lastIndex];
 }	
 
-function getFilter(toId){
-	 fil = toId;
-}
-function getF(){
-	return fil;
+function getTimestemp(times){
+	if(times == ""){
+		return  "";
+	}else{
+	var newTime = times.split("/");
+	return newTime;
+	}
 }
 main();
